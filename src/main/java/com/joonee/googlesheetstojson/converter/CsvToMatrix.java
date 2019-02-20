@@ -18,7 +18,7 @@ public class CsvToMatrix implements GoogleSheetsToMatrix {
     private static final String URL_TEMPLATE = "https://docs.google.com/spreadsheets/d/{id}/pub?output=csv";
 
     @Override
-    public Matrix convert(String spreadsheetId) throws IOException {
+    public Matrix convert(String spreadsheetId, int sheetNumber) throws IOException {
 
         Map<String, List<String>> columns = new HashMap<>();
         List<Map<String, String>> rows = new ArrayList<>();

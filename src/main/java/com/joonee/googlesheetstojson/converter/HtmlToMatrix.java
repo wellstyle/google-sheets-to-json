@@ -17,13 +17,16 @@ public class HtmlToMatrix implements GoogleSheetsToMatrix {
     private static final String URL_TEMPLATE = "https://docs.google.com/spreadsheets/d/{id}/pubhtml";
 
     @Override
-    public Matrix convert(String spreadsheetId) throws IOException {
+    public Matrix convert(String spreadsheetId, int sheetNumber) throws IOException {
         Map<String, List<String>> columns = new HashMap<>();
         List<Map<String, String>> rows = new ArrayList<>();
 
         Document doc = Jsoup.connect(URL_TEMPLATE.replace("{id}", spreadsheetId)).get();
-        Element sheet = doc.getElementById("sheets-viewport");
-        Elements elements = sheet.child(0).select("table tbody tr");
+        Element sheet = doc.getElementById("sheet-menu").select("li").get(sheetNumber - 1);
+        String sheetId = sheet.id().replaceFirst("sheet-button-", "");
+
+        Element sheetData = doc.getElementById(sheetId);
+        Elements elements = sheetData.select("table tbody tr");
 
         // columns
         String[] keys = elements.first().select("td")

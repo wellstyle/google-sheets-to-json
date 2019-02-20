@@ -4,6 +4,6 @@ import java.io.IOException;
 
 public interface GoogleSheetsToMatrix {
 
-    Matrix convert(String spreadsheetId) throws IOException;
+    Matrix convert(String spreadsheetId, int sheetNumber) throws IOException;
 
 }

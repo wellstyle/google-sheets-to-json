@@ -16,12 +16,14 @@ public class ApiRestController {
 
     private final GoogleSheetsToMatrix googleSheetsToMatrix;
 
-    public ApiRestController(GoogleSheetsToMatrix csvToMatrix) {
-        this.googleSheetsToMatrix = csvToMatrix;
+    public ApiRestController(GoogleSheetsToMatrix htmlToMatrix) {
+        this.googleSheetsToMatrix = htmlToMatrix;
     }
 
     @GetMapping
-    public Matrix register(@Pattern(regexp = "[a-zA-Z0-9-_]+") @RequestParam String id) throws IOException {
-        return googleSheetsToMatrix.convert(id);
+    public Matrix register(@RequestParam(name = "id") @Pattern(regexp = "[a-zA-Z0-9-_]+") String spreadsheetId,
+                           @RequestParam(name = "sheet", defaultValue = "1") int sheetNumber) throws IOException {
+        return googleSheetsToMatrix.convert(spreadsheetId, sheetNumber);
     }
+
 }
